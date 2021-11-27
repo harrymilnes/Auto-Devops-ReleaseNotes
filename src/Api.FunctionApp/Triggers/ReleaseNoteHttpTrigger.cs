@@ -21,20 +21,20 @@ namespace Api_FunctionApp.Triggers
             string buildNumber)
         {
             using var streamReader = new StreamReader(httpRequestData.Body);
-            var markDownContent = await streamReader.ReadToEndAsync();
+            var releaseNoteContent = await streamReader.ReadToEndAsync();
 
             var blobName = $"{projectName}-{environmentName}-{buildNumber}-{DateTime.UtcNow:mm-dd-yyyy-HH:mm:ss}";
-            await SaveReleaseToBlobAsync(blobName, markDownContent);
+            await SaveReleaseToBlobAsync(blobName, releaseNoteContent);
 
             return new OkResult();
         }
         
-        private static async Task SaveReleaseToBlobAsync(string blobName, string markDownContent)
+        private static async Task SaveReleaseToBlobAsync(string blobName, string releaseNoteContent)
         {
             var blobServiceClient = new BlobServiceClient(Environment.GetEnvironmentVariable("ReleaseNotesAzureWebStorage"));
             var containerClient = blobServiceClient.GetBlobContainerClient("release-notes");
-            await using Stream stream = new MemoryStream(Encoding.UTF8.GetBytes(markDownContent));
-            await containerClient.UploadBlobAsync($"{blobName}.md", stream);
+            await using Stream stream = new MemoryStream(Encoding.UTF8.GetBytes(releaseNoteContent));
+            await containerClient.UploadBlobAsync($"{blobName}.txt", stream);
         }
     }
 }

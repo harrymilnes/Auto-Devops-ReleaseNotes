@@ -53,7 +53,7 @@
 
 ### Pipeline Setup
 * Create a release Generate Release Notes task with a handle bars template, there's an example in ./src/
-* Create a powershell task with the following script to post to an API endpoint
+* Create a powershell task with the following script to post to the Azure Wiki API endpoint
 
 ## Powershell script
 
