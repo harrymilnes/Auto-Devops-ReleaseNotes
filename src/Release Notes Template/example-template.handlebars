@@ -1,0 +1,16 @@
+Release Notes Template (Handlebars, GenerateReleaseNotes Task):-
+
+# Release - {{releaseDetails.releaseDefinition.name}} 
+
+## Current Release
+**Release Number**: {{releaseDetails.name}}
+**Release completed**: {{releaseDetails.modifiedOn}}     
+**Build Number**: {{buildDetails.id}}
+
+## Previous Release
+**Release Number**: {{compareReleaseDetails.name}}
+
+## Tickets ({{workItems.length}})
+{{#forEach workItems}}
+* **{{this.id}}** - {{lookup this.fields 'System.Title'}}
+{{/forEach}}
